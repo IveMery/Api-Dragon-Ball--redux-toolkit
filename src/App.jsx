@@ -1,25 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { increment, decrement, reset } from './counterSlice'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './views/Home'
+import FavoriteCharacters from './views/FavoriteCharacters'
+import Nabvar from './components/Nabvar'
+import NotFound from './components/NotFound'
 
-function App() {
-  const dispatch = useDispatch()
-  const counter = useSelector(state => state.counter)
+const App = () => {
 
   return (
-    <>
-      <div>
-        <h1>Redux toolkit</h1>
-        <p>Contador: {counter}</p>
-        <button onClick={(() => dispatch(increment()))}>Sumar</button>
-        <button onClick={()=> dispatch(decrement())} >Restar</button>
-        <button onClick={()=>dispatch(reset())} >Resetear</button>
-
-      </div>
-    </>
+    <BrowserRouter>
+      <Nabvar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/FavoriteCharacters' element={<FavoriteCharacters />} />
+        <Route path='*' element={<NotFound/>}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
