@@ -5,6 +5,7 @@ import Characters from '../components/Characters'
 import { setCurrentPage } from '../redux'
 import PageNavigation from '../components/PageNavigation'
 import Loader from '../components/Loader'
+import CharacterDetailsModal from '../components/CharactersDetailsModal'
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const Home = () => {
     const error = useSelector(state => state.characters.error)
     const currentPage = useSelector(state => state.pagination.currentPage)
     const totalPage = useSelector(state => state.pagination.totalPage)
+    const isModalOpen = useSelector(state => state.characters.isModalOpen);
 
     const onPageChange = (newPage) => {
         if (newPage >= 1 && newPage <= totalPage) {
@@ -30,17 +32,20 @@ const Home = () => {
                 <h1>Dragon Ball Legends</h1>
             </div>
             <div>
-                {isLoading && <Loader/>}
+                {isLoading && <Loader />}
                 {error && <p>Error:{error}</p>}
                 {!isLoading && !error && (
                     <div className='d-flex justify-content-center flex-wrap'>
                         {characters.items?.map(character => (
                             <Characters key={character.id} character={character} />
+
                         ))}
                     </div>
                 )}
             </div>
+
             <PageNavigation currentPage={currentPage} onPageChange={onPageChange} totalPage={totalPage} />
+            {isModalOpen && <CharacterDetailsModal />}
         </>
     )
 }

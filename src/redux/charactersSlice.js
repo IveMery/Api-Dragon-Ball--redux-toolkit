@@ -6,7 +6,9 @@ const CharactersSlice = createSlice({
     initialState: {
         list: [],
         favorites: [],
-        isLoading: false
+        isLoading: false,
+        isModalOpen: false,
+        selectedCharacter: null,
     },
     reducers: {
         setCharacterList: (state, action) => {
@@ -28,9 +30,19 @@ const CharactersSlice = createSlice({
         setDeleteFavorites: (state, action) => {
             state.favorites = state.favorites.filter(character => character.id !== action.payload.id)
             decrement()
-        }
+        },
+        openModal(state,action){
+            state.isModalOpen = true
+            state.selectedCharacter = action.payload;
+            
+        },
+        closeModal(state){
+            state.isModalOpen = false
+            state.selectedCharacter = null;
+        },
+        
     },
 })
 
-export const { setCharacterList, startLoading, stopLoading, setFavorites, setDeleteFavorites } = CharactersSlice.actions
+export const { setCharacterList, startLoading, stopLoading, setFavorites, setDeleteFavorites,openModal,closeModal,isModalOpen,selectedCharacter } = CharactersSlice.actions
 export default CharactersSlice.reducer
